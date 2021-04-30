@@ -84,12 +84,11 @@ class Calculator extends React.Component{
       }
       return
     }
-    this.setState({ operator: false })
   }
   handleClick(num) {
     if (num === "=") {
       try {
-        this.setState({ currentDisplay: eval(this.state.currentDisplay) })
+        this.setState({ currentDisplay: eval(this.state.currentDisplay), operator: false})
       } catch (error) {
         console.log("error")
       }
@@ -103,7 +102,7 @@ class Calculator extends React.Component{
         <div className="custom-sizing bg-black rounded p-6">
           <div className="mt-5 mb-4 flex justify-center">
             <div className="bg-white rounded position flex items-center text-8xl px-4">
-              { this.state.currentDisplay}
+              { this.state.currentDisplay }
             </div>
           </div>
           <div className="px-2">
