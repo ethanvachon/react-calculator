@@ -3,7 +3,7 @@ import './main.css'
 
 function Button(props) {
   return (
-    <button className={"bg-white flex justify-center rounded-full p-5 button text-white text-3xl " + props.className} onClick={props.onClick}>
+    <button className={"bg-white flex justify-center rounded-full p-5 button text-white text-3xl mx-2 " + props.className} onClick={props.onClick}>
       {props.value}
     </button>
   );
@@ -17,8 +17,9 @@ class Buttons extends React.Component {
     return (
       <div className="flex flex-col">
         <div className="flex justify-around my-5">
+          {this.renderButton(")", "bg-gray-400 hover:bg-gray-500")}
           {this.renderButton("C", "bg-gray-400 hover:bg-gray-500")}
-          {this.renderButton(" ", "bg-gray-400 hover:bg-gray-500")}
+          {this.renderButton("+/-", "bg-gray-400 hover:bg-gray-500")}
           {this.renderButton("%", "bg-gray-400 hover:bg-gray-500")}
           {this.renderButton("÷", "bg-yellow-500 hover:bg-yellow-600")}
         </div>
@@ -53,19 +54,37 @@ class Calculator extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      currentDisplay: 0,
+      currentDisplay: null,
     };
   }
-  handleClick(num) {
-    if (typeof(num) == 'number') {
-      this.setState({ currentDisplay: num })
+  handleBasic(num) {
+    if (num == "C") {
+      this.setState({ currentDisplay: null })
+    } else if (num == "+/-" && this.state.currentDisplay != null) {
+      this.setState({ currentDisplay: this.state.currentDisplay - (this.state.currentDisplay * 2) })
+    } else if (this.state.currentDisplay != null && this.state.currentDisplay.length >= 10) {
+      return
+    } else if (typeof (num) == 'number') {
+      num = num.toString()
+      if (this.state.currentDisplay == null) {
+        this.setState({ currentDisplay: num })
+      } else {
+        this.setState({ currentDisplay: this.state.currentDisplay + num })
+      }
+    } else if (num == "." && !this.state.currentDisplay.includes(".")) {
+      this.setState({ currentDisplay: this.state.currentDisplay + num })
+    } else if (num == "%" && this.state.currentDisplay.length < 10) {
+      this.setState({ currentDisplay: (this.state.currentDisplay / 100).toString() })
     }
+  }
+  handleClick(num) {
+    this.handleBasic(num)
   }
   render() {
     return(
       <div className="h-screen flex items-center justify-center">
-        <div className="custom-sizing bg-black rounded">
-          <div className="mt-8 mb-4 flex justify-center">
+        <div className="custom-sizing bg-black rounded p-6">
+          <div className="mt-5 mb-4 flex justify-center">
             <div className="bg-white rounded position flex items-center text-8xl px-4">
               { this.state.currentDisplay}
             </div>
