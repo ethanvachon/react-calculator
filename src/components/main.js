@@ -1,10 +1,10 @@
 import React from 'react';
 import './main.css'
 
-function Button() {
+function Button(props) {
   return (
-    <button className="bg-white rounded-full">
-      button
+    <button className="bg-white rounded-full p-5 button">
+      {props.value}
     </button>
   );
 }
@@ -19,8 +19,8 @@ class Display extends React.Component{
   }
 }
 class Buttons extends React.Component {
-  renderButton() {
-    return <Button />
+  renderButton(i) {
+    return <Button value={i} />
   }
   render() {
     return (
@@ -28,32 +28,32 @@ class Buttons extends React.Component {
         <div className="flex justify-around my-5">
           {this.renderButton()}
           {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
+          {this.renderButton("%")}
+          {this.renderButton("C")}
         </div>
         <div className="flex justify-around my-5">
-          {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
+          {this.renderButton("7")}
+          {this.renderButton("8")}
+          {this.renderButton("9")}
+          {this.renderButton("÷")}
         </div>
         <div className="flex justify-around my-5">
-          {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
+          {this.renderButton("4")}
+          {this.renderButton("5")}
+          {this.renderButton("6")}
+          {this.renderButton("X")}
         </div>
         <div className="flex justify-around my-5">
-          {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
+          {this.renderButton("1")}
+          {this.renderButton("2")}
+          {this.renderButton("3")}
+          {this.renderButton("-")}
         </div>
         <div className="flex justify-around my-5">
-          {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
-          {this.renderButton()}
+          {this.renderButton("0")}
+          {this.renderButton(".")}
+          {this.renderButton("=")}
+          {this.renderButton("+")}
         </div>
       </div>
     );
@@ -64,7 +64,7 @@ class Calculator extends React.Component{
     return(
       <div className="h-screen flex items-center justify-center">
         <div className="custom-sizing bg-black rounded">
-          <div className="mt-14 mb-5 flex justify-center">
+          <div className="mt-14 mb-4 flex justify-center">
             <Display />
           </div>
           <Buttons />
