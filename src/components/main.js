@@ -17,7 +17,7 @@ class Buttons extends React.Component {
     return (
       <div className="flex flex-col">
         <div className="flex justify-around my-5">
-          {this.renderButton(")", "bg-gray-400 hover:bg-gray-500")}
+          {/* {this.renderButton(")", "bg-gray-400 hover:bg-gray-500")} */}
           {this.renderButton("C", "bg-gray-400 hover:bg-gray-500")}
           {this.renderButton("+/-", "bg-gray-400 hover:bg-gray-500")}
           {this.renderButton("%", "bg-gray-400 hover:bg-gray-500")}
@@ -27,7 +27,7 @@ class Buttons extends React.Component {
           {this.renderButton(7, "bg-gray-600 hover:bg-gray-700")}
           {this.renderButton(8, "bg-gray-600 hover:bg-gray-700")}
           {this.renderButton(9, "bg-gray-600 hover:bg-gray-700")}
-          {this.renderButton("x", "bg-yellow-500 hover:bg-yellow-600")}
+          {this.renderButton("*", "bg-yellow-500 hover:bg-yellow-600")}
         </div>
         <div className="flex justify-around my-5">
           {this.renderButton(4, "bg-gray-600 hover:bg-gray-700")}
@@ -55,12 +55,13 @@ class Calculator extends React.Component{
     super(props);
     this.state = {
       currentDisplay: null,
+      operator: false
     };
   }
   handleBasic(num) {
-    if (num == "C") {
+    if (num === "C") {
       this.setState({ currentDisplay: null })
-    } else if (num == "+/-" && this.state.currentDisplay != null) {
+    } else if (num === "+/-" && this.state.currentDisplay != null) {
       this.setState({ currentDisplay: this.state.currentDisplay - (this.state.currentDisplay * 2) })
     } else if (this.state.currentDisplay != null && this.state.currentDisplay.length >= 10) {
       return
@@ -71,14 +72,30 @@ class Calculator extends React.Component{
       } else {
         this.setState({ currentDisplay: this.state.currentDisplay + num })
       }
-    } else if (num == "." && !this.state.currentDisplay.includes(".")) {
+    } else if (num === "." && !this.state.currentDisplay.includes(".")) {
       this.setState({ currentDisplay: this.state.currentDisplay + num })
-    } else if (num == "%" && this.state.currentDisplay.length < 10) {
-      this.setState({ currentDisplay: (this.state.currentDisplay / 100).toString() })
+    } else if (num === "%") {
+      if (this.state.currentDisplay.length < 10) {
+        this.setState({ currentDisplay: (this.state.currentDisplay / 100).toString() })
+      }
+    } else if (this.state.currentDisplay != null) {
+      if (this.state.operator === false) {
+        this.setState({ currentDisplay: this.state.currentDisplay + num, operator: true })
+      }
+      return
     }
+    this.setState({ operator: false })
   }
   handleClick(num) {
-    this.handleBasic(num)
+    if (num === "=") {
+      try {
+        this.setState({ currentDisplay: eval(this.state.currentDisplay) })
+      } catch (error) {
+        console.log("error")
+      }
+    } else {
+      this.handleBasic(num)
+    }
   }
   render() {
     return(
