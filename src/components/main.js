@@ -55,14 +55,21 @@ class Calculator extends React.Component{
     super(props);
     this.state = {
       currentDisplay: null,
-      operator: false
+      operator: false,
+      currentOperator: null,
     };
   }
   handleBasic(num) {
     if (num === "C") {
       this.setState({ currentDisplay: null })
+      this.setState({ operator: false })
     } else if (num === "+/-" && this.state.currentDisplay != null) {
-      this.setState({ currentDisplay: this.state.currentDisplay - (this.state.currentDisplay * 2) })
+      if (this.state.operator === false) {
+        this.setState({ currentDisplay: this.state.currentDisplay - (this.state.currentDisplay * 2) })
+      } else {
+        let target = this.state.currentDisplay.slice(this.state.currentDisplay.indexOf(this.state.currentOperator) + 1, this.state.currentDisplay.length)
+        this.setState({ currentDisplay: this.state.currentDisplay.replace(target, target - (target * 2))})
+      }
     } else if (this.state.currentDisplay != null && this.state.currentDisplay.length >= 10) {
       return
     } else if (typeof (num) == 'number') {
@@ -80,7 +87,7 @@ class Calculator extends React.Component{
       }
     } else if (this.state.currentDisplay != null) {
       if (this.state.operator === false) {
-        this.setState({ currentDisplay: this.state.currentDisplay + num, operator: true })
+        this.setState({ currentDisplay: this.state.currentDisplay + num, operator: true, currentOperator: num })
       }
       return
     }
@@ -89,7 +96,7 @@ class Calculator extends React.Component{
     if (num === "=") {
       try {
         this.setState({ currentDisplay: eval(this.state.currentDisplay), operator: false})
-      } catch (error) {
+      } catch (error) { 
         console.log("error")
       }
     } else {
