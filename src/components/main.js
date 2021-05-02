@@ -66,7 +66,7 @@ class Calculator extends React.Component{
     } else if (num === "+/-" && this.state.currentDisplay != null) {
       if (this.state.operator === false) {
         this.setState({ currentDisplay: this.state.currentDisplay - (this.state.currentDisplay * 2) })
-      } else {
+      } else if(this.state.currentOperator != "-") {
         let target = this.state.currentDisplay.slice(this.state.currentDisplay.indexOf(this.state.currentOperator) + 1, this.state.currentDisplay.length)
         this.setState({ currentDisplay: this.state.currentDisplay.replace(target, target - (target * 2))})
       }
