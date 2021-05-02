@@ -82,8 +82,11 @@ class Calculator extends React.Component{
     } else if (num === "." && !this.state.currentDisplay.includes(".")) {
       this.setState({ currentDisplay: this.state.currentDisplay + num })
     } else if (num === "%") {
-      if (this.state.currentDisplay.length < 10) {
+      if (this.state.currentDisplay.length < 10 && this.state.operator === false) {
         this.setState({ currentDisplay: (this.state.currentDisplay / 100).toString() })
+      } else {
+        let target = this.state.currentDisplay.slice(this.state.currentDisplay.indexOf(this.state.currentOperator) + 1, this.state.currentDisplay.length)
+        this.setState({ currentDisplay: this.state.currentDisplay.replace(target, target / 100) })
       }
     } else if (this.state.currentDisplay != null) {
       if (this.state.operator === false) {

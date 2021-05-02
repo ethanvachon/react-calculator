@@ -9,3 +9,6 @@
 .zero {
   width: 14vw;
 }
+.h-screen {
+  user-select: none;
+}
