@@ -12,7 +12,7 @@ import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import '@testing-library/jest-dom';
 
-import Calculator from '../src/components/main'
+import Calculator from './components/calculator/main'
 
 let container = null;
 beforeEach(() => {
