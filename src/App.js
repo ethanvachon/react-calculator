@@ -1,35 +1,39 @@
 import './App.css';
 import Calculator from './components/calculator/main'
-import Game from "./components/tic-tac-toe/main";
+import Game from "./components/tic-tac-toe/main"
+import Nav from "./components/nav/main"
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
 
 
 function App() {
   return (
     <Router>
-
-      <nav>
-        <Link to="/calculator">Calculator</Link>
+      <Nav />
+      {/* <nav>
+        <Link to="/">Calculator</Link>
         <Link to="/game">Tic-Tac-Toe</Link>
-      </nav>
+      </nav> */}
       <Switch>
-        <Route path="/calculator">
-        <div className="App bg-gray-900">
-          <Calculator />
-        </div>
+        <Redirect exact from="/" to="/calculator" />
+        <Route path="/" >
         </Route>
       </Switch>
       <Switch>
-        <Game />
+        <Route path="/calculator" component={Calculator}>
+          {/* <Calculator /> */}
+        </Route>
       </Switch>
       <Switch>
-        
+        <Route path="/game" component={Game}>
+          {/* <Game /> */}
+        </Route>
       </Switch>
      </Router>
   );

@@ -108,6 +108,7 @@ class Calculator extends React.Component{
   }
   render() {
     return(
+      <div className="bg-gray-900">
       <div className="h-screen flex items-center justify-center">
         <div className="custom-sizing bg-black rounded p-6">
           <div className="mt-5 mb-4 flex justify-center">
@@ -119,6 +120,7 @@ class Calculator extends React.Component{
             <Buttons onClick={(i) => this.handleClick(i)}/>
           </div>
         </div>
+      </div>
       </div>
     );
   }
